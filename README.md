@@ -21,19 +21,24 @@ Autonomous perception systems operating in real-world environments face signific
 
 ---
 
-## 📊 Benchmark Results on M3FD
+## 📊 Authoritative Benchmark Results on M3FD
 
-Evaluated on the official 4,200-pair **M3FD (Multi-Modal Multi-Task Fusion Detection)** benchmark across the standard Validation ($N=420$) and Test ($N=420$) splits under COCO evaluation protocols ($	ext{IoU}=0.50$ and $	ext{IoU}=0.50:0.95$):
+Evaluated on the official 4,200-pair **M3FD (Multi-Modal Multi-Task Fusion Detection)** benchmark across the standard Validation split ($N=420$) and unseen Test split ($N=840$ image pairs, 6,697 labeled instances) under official academic protocols ($\\tau=0.001, \\theta=0.60$) and operational deployment protocols ($\\tau=0.25, \\theta=0.50$):
 
-| Method / Architecture | Fusion Level | Val mAP@50 | Val mAP@50:95 | Test mAP@50 | Test mAP@50:95 | Parameters |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| **RGB Unimodal Baseline** | None | 68.61% | 40.54% | 48.06% | 27.60% | 9.12 M |
-| **IR Unimodal Baseline** | None | 65.65% | 38.65% | 47.90% | 28.09% | 9.12 M |
-| **TarDAL + YOLOv5su** | Feature-Level | 68.96% | 40.75% | 48.56% | 28.16% | ~10.1 M |
-| **Decision-Level Late Fusion** | Decision-Level | 71.39% | 42.14% | 51.52% | 30.12% | 18.24 M |
-| **TarDAL + YOLO11s (Ours)** | **Feature-Level** | **73.96%** | **44.91%** | **53.27%** | **31.39%** | **9.41 M** |
+| Architecture / Stage | Fusion Paradigm | Val mAP@50 | Test mAP@50 (Academic) | Test mAP@50 (Operational) | Latency (T4) | Throughput | Fault Tolerance |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
+| **Stage 4A: Direct Optical (RGB)** | Unimodal Optical | 76.40% | 29.33% | 25.59% | **9.42 ms** | **106.2 FPS** | Fails in darkness |
+| **Stage 4B: Direct Thermal (IR)** | Unimodal Thermal | 72.00% | 28.38% | 23.54% | **9.59 ms** | 104.3 FPS | Blind to cold objects |
+| **Stage 3: TarDAL Feature Fusion** 🏆 | Feature-Level (YOLOv5su) | 74.57% | **48.56%** 🏆 | 40.12% | 77.95 ms | 12.8 FPS | Single Point of Failure |
+| **Stage 5: Decision-Level Late Fusion** 🏆 | Decision-Level (WBF) | 74.01% | 34.10% | 30.29% | **19.41 ms** | **51.5 FPS** 🏆 | **100% Graceful Degradation** 🏆 |
+| **Stage 6: Modern YOLO11s Fusion** 🏆 | Feature-Level (YOLO11s) | **81.08%** 🏆 | 45.72% | **41.65%** 🏆 | 79.42 ms | 12.6 FPS | **Peak People (77.5%) & Car (85.3%)** 🏆 |
 
-> For comprehensive per-class breakdowns (People, Car, Bus, Motorcycle, Lamp, Truck) and distribution shift analyses, see [docs/BENCHMARKS.md](docs/BENCHMARKS.md).
+### 🏆 Key Findings
+- **Multimodal Superiority**: Feature fusion in Stage 3 achieves **48.56% mAP@50**, delivering a **+19.24% absolute gain (+65.6% relative boost)** over Direct Optical RGB.
+- **Safety-Critical Performance**: Stage 6 YOLO11s sets all project records for primary real-world categories (**People: 77.49%**, **Car: 85.26%**, and Operational Deployment: **41.65%**).
+- **Edge Deployment**: Stage 5 Late Fusion provides real-time throughput (**51.5 FPS**) and **100% sensor fault tolerance**.
+
+> For detailed per-class breakdowns, latency decompositions, and domain shift analyses, see [docs/BENCHMARKS.md](docs/BENCHMARKS.md).
 
 ---
 
