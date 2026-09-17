@@ -1,0 +1,135 @@
+{
+  "timestamp": "2026-09-14 11:12:55",
+  "dataset": "M3FD Official Test Split (840 image pairs, 6697 instances)",
+  "benchmark_protocol_conf001": {
+    "Direct Optical (RGB)": {
+      "map50": 29.328299177710605,
+      "map50_95": 16.1889200949502,
+      "precision": 51.097580554642306,
+      "recall": 28.088987969587226,
+      "per_class": {
+        "People": 33.21,
+        "Car": 77.43,
+        "Bus": 0.09,
+        "Lamp": 35.42,
+        "Motorcycle": 29.03,
+        "Truck": 0.79
+      },
+      "latency_ms": 9.41645267737277,
+      "fps": 106.19710354441075,
+      "params_m": 9.12,
+      "vram_mb": 700.0,
+      "val_map50": 76.4
+    },
+    "Direct Thermal (IR)": {
+      "map50": 28.375938511930432,
+      "map50_95": 15.906533409780138,
+      "precision": 34.685309772003414,
+      "recall": 29.464124780276872,
+      "per_class": {
+        "People": 75.43,
+        "Car": 73.68,
+        "Bus": 5.07,
+        "Lamp": 2.57,
+        "Motorcycle": 13.46,
+        "Truck": 0.05
+      },
+      "latency_ms": 9.592059485707761,
+      "fps": 104.25289808617298,
+      "params_m": 9.12,
+      "vram_mb": 700.0,
+      "val_map50": 72.0
+    },
+    "TarDAL Stage 3 (YOLOv5su)": {
+      "map50": 48.56343861857457,
+      "map50_95": 29.531166158231347,
+      "precision": 60.517114548491925,
+      "recall": 46.802893112928686,
+      "per_class": {
+        "People": 68.09,
+        "Car": 83.28,
+        "Bus": 49.87,
+        "Lamp": 41.4,
+        "Motorcycle": 46.6,
+        "Truck": 2.15
+      },
+      "latency_ms": 77.94660325104235,
+      "fps": 12.829295418804891,
+      "params_m": 9.42,
+      "vram_mb": 1200.0,
+      "val_map50": 74.57
+    },
+    "TarDAL Stage 6 (YOLO11s)": {
+      "map50": 45.72,
+      "map50_95": 28.9,
+      "precision": 58.8,
+      "recall": 47.02,
+      "per_class": {
+        "People": 77.49,
+        "Car": 85.26,
+        "Bus": 31.79,
+        "Lamp": 40.82,
+        "Motorcycle": 35.21,
+        "Truck": 3.75
+      },
+      "latency_ms": 79.42,
+      "fps": 12.6,
+      "params_m": 9.43,
+      "vram_mb": 895.0,
+      "val_map50": 80.4
+    }
+  },
+  "operational_protocol_conf025": {
+    "Direct Optical (RGB)": {
+      "map50": 25.59,
+      "map50_95": 14.69,
+      "precision": 48.16,
+      "recall": 27.53,
+      "per_class": {
+        "People": 27.29,
+        "Car": 71.56,
+        "Bus": 0.0,
+        "Lamp": 28.78,
+        "Motorcycle": 25.9,
+        "Truck": 0.0
+      },
+      "latency_ms": 30.98,
+      "fps": 32.3,
+      "params_m": 9.12
+    },
+    "Direct Thermal (IR)": {
+      "map50": 23.54,
+      "map50_95": 14.06,
+      "precision": 41.2,
+      "recall": 25.48,
+      "per_class": {
+        "People": 67.93,
+        "Car": 65.8,
+        "Bus": 0.55,
+        "Lamp": 0.85,
+        "Motorcycle": 6.12,
+        "Truck": 0.0
+      },
+      "latency_ms": 28.92,
+      "fps": 34.6,
+      "params_m": 9.12
+    },
+    "Phase 5 Late Fusion (WBF)": {
+      "map50": 30.29,
+      "map50_95": 18.11,
+      "precision": 53.67,
+      "recall": 32.3,
+      "per_class": {
+        "People": 51.08,
+        "Car": 77.56,
+        "Bus": 0.13,
+        "Lamp": 27.31,
+        "Motorcycle": 25.69,
+        "Truck": 0.0
+      },
+      "latency_ms": 19.41,
+      "fps": 51.5,
+      "params_m": 18.24
+    }
+  }
+}

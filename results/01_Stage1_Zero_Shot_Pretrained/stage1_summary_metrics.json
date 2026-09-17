@@ -1,0 +1,12 @@
+{
+  "stage": "Stage 1: Zero-Shot Baseline (Pretrained TarDAL)",
+  "generator": "TarDAL Generator (Unadapted, official checkpoint)",
+  "detector": "YOLOv5su (Direct zero-shot evaluation)",
+  "val_map50": 16.97,
+  "test_map50_academic": 12.4,
+  "test_map50_operational": 9.8,
+  "retention_rate": "73.1%",
+  "total_latency_ms": 121.2,
+  "throughput_fps": 8.2,
+  "description": "Baseline evaluation using official off-the-shelf TarDAL without task adaptation."
+}

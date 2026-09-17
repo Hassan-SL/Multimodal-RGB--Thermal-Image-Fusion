@@ -1,0 +1,67 @@
+{
+  "timestamp": "2026-09-13 07:38:38",
+  "master_table": [
+    [
+      "1. Direct Optical (RGB)",
+      "25.59%",
+      "14.69%",
+      "48.16%",
+      "27.53%",
+      "9.42 ms",
+      "106.2 FPS",
+      "9.12M",
+      "Unimodal Control"
+    ],
+    [
+      "2. Direct Thermal (IR)",
+      "23.54%",
+      "14.06%",
+      "41.20%",
+      "25.48%",
+      "9.59 ms",
+      "104.3 FPS",
+      "9.12M",
+      "Unimodal Control"
+    ],
+    [
+      "3. Stage 3 TarDAL + YOLOv5su",
+      "48.56%",
+      "29.53%",
+      "60.52%",
+      "46.80%",
+      "77.95 ms",
+      "12.8 FPS",
+      "9.42M",
+      "Stage 3 Baseline"
+    ],
+    [
+      "4. Stage 5 Late Fusion (WBF)",
+      "30.29%",
+      "18.11%",
+      "53.67%",
+      "32.30%",
+      "19.41 ms",
+      "31.7 FPS",
+      "18.24M",
+      "Decision Fusion"
+    ],
+    [
+      "5. Stage 6 TarDAL + YOLO11s \ud83c\udfc6",
+      "45.72%",
+      "28.90%",
+      "58.80%",
+      "47.02%",
+      "79.42 ms",
+      "12.6 FPS",
+      "9.71M",
+      "Modern Architecture"
+    ]
+  ],
+  "deltas": {
+    "delta_m50_vs_s3": -2.84,
+    "delta_m95_vs_s3": -0.63,
+    "delta_r_vs_s3": 0.22,
+    "delta_p_vs_s3": -1.72,
+    "delta_m50_vs_rgb": 20.13
+  }
+}

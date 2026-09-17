@@ -1,0 +1,20 @@
+{
+  "stage": "Stage 3: Task-Driven Feature Fusion (Joint Adapted)",
+  "generator": "TarDAL Generator (Jointly adapted with detection gradients)",
+  "detector": "YOLOv5su (Jointly fine-tuned)",
+  "val_map50": 74.57,
+  "test_map50_academic": 48.56,
+  "test_map50_operational": 40.12,
+  "retention_rate": "65.1%",
+  "total_latency_ms": 77.95,
+  "throughput_fps": 12.8,
+  "per_class_test_map50": {
+    "People": 68.09,
+    "Car": 83.28,
+    "Bus": 58.62,
+    "Lamp": 41.4,
+    "Motorcycle": 46.6,
+    "Truck": 14.04
+  },
+  "key_achievement": "Highest test mAP@50 (48.56%) across 6-class average; project-high 65.1% Retention Rate."
+}
