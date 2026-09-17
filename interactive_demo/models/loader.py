@@ -1,11 +1,11 @@
 """
 Thread-safe Model Manager and Checkpoint Resolver.
 Implements lazy-loading and resource caching.
-Automatically falls back across local workspace, Google Drive, and Colab environments.
+Automatically falls back across weights/, checkpoints/, Google Drive, and Colab environments.
 """
 
 from pathlib import Path
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List
 import torch
 
 from .tardal_wrapper import TarDALGeneratorWrapper
@@ -14,6 +14,19 @@ from utils.device import get_device
 from utils.logging_utils import get_logger
 
 logger = get_logger("ModelManager")
+
+# Common checkpoint filename aliases across research stages
+ALIASES = {
+    "best.pt": ["stage3_best.pt", "yolov5su_stage3_best.pt", "best.pt"],
+    "stage3_best.pt": ["best.pt", "yolov5su_stage3_best.pt"],
+    "yolov5su_stage3_best.pt": ["stage3_best.pt", "best.pt"],
+    "stage6_yolo11s_best.pt": ["yolo11s_stage6_best.pt", "stage6_yolo11s_best.pt", "best.pt"],
+    "yolo11s_stage6_best.pt": ["stage6_yolo11s_best.pt", "best.pt"],
+    "stage3_gen_best.pt": ["tardal_generator.pth", "tardal-tt.pth", "stage3_gen_best.pt"],
+    "tardal_generator.pth": ["tardal-tt.pth", "stage3_gen_best.pt"],
+    "yolov5su_rgb_best.pt": ["yolov5su_rgb.pt", "rgb_best.pt"],
+    "yolov5su_ir_best.pt": ["yolov5su_ir.pt", "ir_best.pt"]
+}
 
 
 class ModelManager:
@@ -40,21 +53,40 @@ class ModelManager:
     def resolve_checkpoint(self, rel_path: str) -> Optional[Path]:
         """Resolves checkpoint location across potential storage mount points."""
         rel_p = Path(rel_path)
-        candidates = [
-            self.project_root / rel_path,
-            self.base_dir / rel_path,
-            self.project_root / "checkpoints" / rel_p.name,
-            self.base_dir / "checkpoints" / rel_p.name,
-            Path("E:/My Drive/FYP/code") / rel_path,
-            Path("E:/My Drive/FYP/code/checkpoints") / rel_p.name,
-            Path("/content/drive/MyDrive/FYP/code") / rel_path,
-            Path(rel_path),
-            Path.cwd() / rel_path,
-            Path.cwd().parent / rel_path
+        filename = rel_p.name
+
+        # Generate list of filename variations
+        search_names = [filename] + ALIASES.get(filename, [])
+
+        search_dirs = [
+            self.project_root / "weights",
+            self.project_root / "checkpoints",
+            self.project_root / "checkpoints" / "stage6",
+            self.base_dir / "weights",
+            self.base_dir / "checkpoints",
+            self.project_root.parent / "code" / "checkpoints",
+            self.project_root.parent / "code" / "checkpoints" / "stage6",
+            self.project_root.parent / "code" / "TarDAL-main" / "weights" / "v1",
+            Path("E:/My Drive/FYP/code/checkpoints"),
+            Path("/content/drive/MyDrive/FYP/code/checkpoints"),
+            self.project_root,
+            Path.cwd()
         ]
-        for c in candidates:
-            if c.exists() and c.is_file() and c.stat().st_size > 0:
-                return c
+
+        # 1. Direct path check
+        direct = self.project_root / rel_path
+        if direct.exists() and direct.is_file() and direct.stat().st_size > 0:
+            return direct
+
+        # 2. Search across dirs and aliases
+        for sdir in search_dirs:
+            if not sdir.exists():
+                continue
+            for name in search_names:
+                cand = sdir / name
+                if cand.exists() and cand.is_file() and cand.stat().st_size > 0:
+                    return cand
+
         return None
 
     def get_yolo_detector(self, model_key: str, rel_path: str) -> YOLODetectorWrapper:
@@ -66,7 +98,7 @@ class ModelManager:
         if ckpt_path is None:
             raise FileNotFoundError(
                 f"Checkpoint '{rel_path}' not found! "
-                f"Checked local workspace and Google Drive."
+                f"Please download the pre-trained weights into the 'weights/' directory."
             )
 
         logger.info(f"Loading YOLO detector [{model_key}] from {ckpt_path}...")
@@ -74,19 +106,22 @@ class ModelManager:
         self._cache[model_key] = wrapper
         return wrapper
 
-    def get_tardal_generator(self, rel_path: str = "checkpoints/stage3_gen_best.pt") -> TarDALGeneratorWrapper:
+    def get_tardal_generator(self, rel_path: str = "weights/tardal_generator.pth") -> TarDALGeneratorWrapper:
         """Lazy-loads and caches the frozen TarDAL generator."""
         if "tardal_generator" in self._cache:
             return self._cache["tardal_generator"]
 
         ckpt_path = self.resolve_checkpoint(rel_path)
         if ckpt_path is None:
-            # Fallback to pretrained weights if stage 3 not yet found
-            fallback = self.resolve_checkpoint("TarDAL-1.0.0/weights/tardal-dt.pt")
-            if fallback:
-                ckpt_path = fallback
-            else:
-                raise FileNotFoundError(f"TarDAL generator checkpoint '{rel_path}' not found!")
+            ckpt_path = self.resolve_checkpoint("checkpoints/stage3_gen_best.pt")
+        if ckpt_path is None:
+            ckpt_path = self.resolve_checkpoint("tardal-tt.pth")
+
+        if ckpt_path is None:
+            raise FileNotFoundError(
+                f"TarDAL generator checkpoint '{rel_path}' not found! "
+                f"Please download 'tardal_generator.pth' into the 'weights/' directory."
+            )
 
         logger.info(f"Loading TarDAL Generator from {ckpt_path}...")
         wrapper = TarDALGeneratorWrapper(ckpt_path, self.device)
@@ -98,13 +133,3 @@ class ModelManager:
         self._cache.clear()
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
-        logger.info("Cleared model cache from memory.")
-
-
-_MANAGER = None
-
-def get_model_manager(base_dir: Optional[Path] = None) -> ModelManager:
-    global _MANAGER
-    if _MANAGER is None:
-        _MANAGER = ModelManager(base_dir)
-    return _MANAGER

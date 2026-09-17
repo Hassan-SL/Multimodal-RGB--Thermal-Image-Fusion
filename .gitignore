@@ -44,6 +44,7 @@ temp_videos/
 *.mp4
 *.avi
 *.mov
+!interactive_demo/assets/sample_videos/*.mp4
 *.zip
 *.tar
 *.tar.gz
