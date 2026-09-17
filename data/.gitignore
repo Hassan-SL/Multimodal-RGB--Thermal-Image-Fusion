@@ -1,0 +1,4 @@
+# Ignore all downloaded raw dataset files, images, and labels
+*
+!README.md
+!.gitignore

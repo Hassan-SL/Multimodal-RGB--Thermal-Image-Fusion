@@ -1,0 +1,64 @@
+# Multimodal RGB-IR Object Detection Application Configuration
+
+models:
+  rgb:
+    name: "Direct Optical (RGB)"
+    architecture: "YOLOv5su (9.12M)"
+    checkpoint: "checkpoints/yolov5su_rgb_best.pt"
+    description: "Unimodal Visible Optical detector trained directly on 3-channel RGB."
+
+  ir:
+    name: "Direct Thermal (IR)"
+    architecture: "YOLOv5su (9.12M)"
+    checkpoint: "checkpoints/yolov5su_ir_best.pt"
+    description: "Unimodal Thermal Infrared detector trained directly on 3-channel replicated IR."
+
+  stage3:
+    name: "TarDAL + YOLOv5su (Feature Fusion)"
+    architecture: "TarDAL Generator (296K) + YOLOv5su (9.12M)"
+    generator: "checkpoints/stage3_gen_best.pt"
+    detector: "checkpoints/best.pt"
+    description: "Task-Driven Joint Feature Fusion: Generator fine-tuned with downstream detection gradients."
+
+  stage6:
+    name: "TarDAL + YOLO11s (Modern Detector Fusion)"
+    architecture: "TarDAL Generator (296K) + YOLO11s (9.43M)"
+    generator: "checkpoints/stage3_gen_best.pt"
+    detector: "checkpoints/stage6/stage6_yolo11s_best.pt"
+    description: "Modern Detector Feature Fusion: Pre-trained YOLO11s with C3k2 and C2PSA attention modules."
+
+  stage5:
+    name: "Decision-Level Late Fusion (WBF)"
+    architecture: "Dual YOLOv5su (18.24M) + Weighted Boxes Fusion"
+    rgb_checkpoint: "checkpoints/yolov5su_rgb_best.pt"
+    ir_checkpoint: "checkpoints/yolov5su_ir_best.pt"
+    description: "Decision-Level Late Fusion: Independent unimodal streams merged via class-constrained WBF."
+
+late_fusion:
+  validated_rgb_weight: 0.60
+  validated_ir_weight: 0.40
+  iou_match_threshold: 0.50
+
+protocols:
+  operational:
+    name: "Operational Deployment"
+    confidence: 0.25
+    iou: 0.50
+    description: "Real-world edge thresholding for autonomous vehicles & robotics."
+  academic:
+    name: "Academic Benchmark"
+    confidence: 0.001
+    iou: 0.60
+    description: "Full precision-recall curve integration (standard PASCAL/COCO)."
+
+dataset:
+  classes:
+    0: "People"
+    1: "Car"
+    2: "Bus"
+    3: "Lamp"
+    4: "Motorcycle"
+    5: "Truck"
+  image_size: 640
+  sample_dir: "assets/sample_pairs"
+  telemetry_json: "runs/master_benchmark/all_stages_decomposed_results.json"

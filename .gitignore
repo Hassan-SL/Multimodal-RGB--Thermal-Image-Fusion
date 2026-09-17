@@ -1,0 +1,59 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Virtual Environments
+.venv/
+env/
+venv/
+
+# IDE and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Deep Learning Model Weights & Checkpoints (Links in weights/README.md)
+*.pt
+*.pth
+*.bin
+*.onnx
+*.engine
+weights/*.pt
+weights/*.pth
+checkpoints/*.pt
+checkpoints/*.pth
+!weights/README.md
+
+# Datasets and Media (External download instructions in docs/DATASET_GUIDE.md)
+data/*
+!data/README.md
+!data/.gitignore
+m3fd_yolo_official_split/
+temp_videos/
+*.mp4
+*.avi
+*.mov
+*.zip
+*.tar
+*.tar.gz
+
+# Training Runs, Logs & Cache
+runs/
+logs/
+wandb/
+.streamlit/cache/
+
+# OS Specific
+.DS_Store
+Thumbs.db

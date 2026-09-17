@@ -1,0 +1,8 @@
+# Ignore all binary weight checkpoints
+*.pt
+*.pth
+*.onnx
+*.engine
+*.bin
+!README.md
+!.gitignore

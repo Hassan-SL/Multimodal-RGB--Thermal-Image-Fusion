@@ -1,0 +1,14 @@
+# M3FD Multimodal Dataset YAML Configuration for YOLO
+path: ../data/m3fd   # Dataset root directory relative to training script
+train: images/train  # 3,360 images
+val: images/val      # 420 images
+test: images/test    # 420 images
+
+# Classes
+names:
+  0: People
+  1: Car
+  2: Bus
+  3: Motorcycle
+  4: Lamp
+  5: Truck

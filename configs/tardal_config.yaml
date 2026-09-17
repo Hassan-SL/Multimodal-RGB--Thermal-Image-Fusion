@@ -1,0 +1,6 @@
+# TarDAL Feature Fusion Configuration
+input_size: [640, 640]
+color_space: "YCrCb"
+channels: 1          # Single luminance channel for fusion
+norm_range: [0.0, 1.0]
+tanh_remapping: true

@@ -1,0 +1,23 @@
+name: multisensor_fusion
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pytorch>=2.0.0
+  - torchvision>=0.15.0
+  - pytorch-cuda=11.8
+  - numpy>=1.24.0
+  - pip
+  - pip:
+      - ultralytics>=8.3.0
+      - opencv-python>=4.8.0
+      - streamlit>=1.35.0
+      - matplotlib>=3.7.0
+      - seaborn>=0.12.0
+      - pandas>=2.0.0
+      - tqdm>=4.65.0
+      - pyyaml>=6.0
+      - ensemble-boxes>=1.0.9

@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you find this research and codebase helpful, please cite this project."
+title: "MultiSensorFusion_RGB_IR: Multimodal Target-Aware Feature and Decision Fusion for Robust Object Detection"
+version: 1.0.0
+date-released: 2026-09-16
+authors:
+  - family-names: "Research Project"
+    given-names: "MultiSensorFusion"
+repository-code: "https://github.com/your-username/MultiSensorFusion_RGB_IR"
+keywords:
+  - multimodal-fusion
+  - infrared-imaging
+  - computer-vision
+  - object-detection
+  - yolo11
+  - tardal
+license: MIT
