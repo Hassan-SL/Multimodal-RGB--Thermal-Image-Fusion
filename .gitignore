@@ -58,3 +58,7 @@ wandb/
 # OS Specific
 .DS_Store
 Thumbs.db
+
+# Local Results for Prism OpenAI (Do NOT push to Git)
+results/
+
