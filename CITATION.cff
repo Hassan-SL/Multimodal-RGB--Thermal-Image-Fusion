@@ -6,7 +6,7 @@ date-released: 2026-09-16
 authors:
   - family-names: "Research Project"
     given-names: "MultiSensorFusion"
-repository-code: "https://github.com/your-username/MultiSensorFusion_RGB_IR"
+repository-code: "https://github.com/Hassan-SL/Multimodal-RGB--Thermal-Image-Fusion"
 keywords:
   - multimodal-fusion
   - infrared-imaging

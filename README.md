@@ -78,7 +78,7 @@ MultiSensorFusion_RGB_IR/
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/MultiSensorFusion_RGB_IR.git
+git clone https://github.com/Hassan-SL/Multimodal-RGB--Thermal-Image-Fusion.git
 cd MultiSensorFusion_RGB_IR
 ```
 
@@ -103,7 +103,7 @@ pip install -r requirements.txt
 
 ### 3. Download Dataset & Checkpoints
 - Follow [data/README.md](data/README.md) to download the M3FD dataset from Kaggle or the official repository.
-- Follow [weights/README.md](weights/README.md) to download the pre-trained weights for TarDAL, YOLOv5su, and YOLO11s.
+- Download pre-trained weights directly from [GitHub Release v1.0.0](https://github.com/Hassan-SL/Multimodal-RGB--Thermal-Image-Fusion/releases/tag/v1.0.0) and place them into weights/ (see [weights/README.md](weights/README.md)).
 
 ### 4. Run the Interactive Web Demonstrator
 Launch the live interactive research demonstration dashboard:
@@ -128,7 +128,7 @@ If you find this repository or research helpful in your work, please cite:
   author={MultiSensorFusion Research Team},
   year={2026},
   publisher={GitHub},
-  howpublished={\url{https://github.com/your-username/MultiSensorFusion_RGB_IR}}
+  howpublished={\url{https://github.com/Hassan-SL/Multimodal-RGB--Thermal-Image-Fusion}}
 }
 ```
 
